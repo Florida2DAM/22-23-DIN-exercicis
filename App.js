@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
   SafeAreaView,
@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 
-import {TextInput} from 'react-native-paper';
+import {TextInput, Button, Switch, Surface, Chip} from 'react-native-paper';
 
 import {
   Colors,
@@ -41,20 +41,15 @@ const Section = ({children, title}) => {
         ]}>
         {title}
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+      {children}
     </View>
   );
 };
 
 const App = () => {
+  const [necessiteDescans, setNecessiteDescans] = useState(false);
+  const [isWifi, setIsWifi] = useState(false);
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -71,28 +66,48 @@ const App = () => {
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
-        <TextInput label="Email" placeholder='Escriu el teu email' />
-
-
 
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Primer Pas">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
+          <Section title="TextInput (email)">
+            <TextInput label="Email" placeholder="Escriu el teu email" />
           </Section>
-          <Section title="Mira els teus canvis">
-            <ReloadInstructions />
+          <Section title="Button(amb text i icona) ">
+            <Button icon="alien" mode="contained" uppercase={false}>
+              Alien
+            </Button>
+            <Button icon="alien" mode="contained" dark={false}>
+              Alien
+            </Button>
+            <Button icon="alien" mode="outlined">
+              Alien
+            </Button>
+            <Button icon="alien" mode="text">
+              Alien
+            </Button>
           </Section>
-          <Section title="Debug">
-            <DebugInstructions />
+          <Section title="Switch Necessites un descans?">
+            <Switch
+              value={necessiteDescans}
+              color="red"
+              onValueChange={() => setNecessiteDescans(!necessiteDescans)}
+            />
           </Section>
-          <Section title="Per saber mes ...">
-            Read the docs to discover what to do next:
+          <Section title="Botó dins un d'component Surface?">
+            <Surface style={styles.surface}>
+              <Button icon="alien" mode="text">
+                Alien
+              </Button>
+            </Surface>
           </Section>
-          <LearnMoreLinks />
+          <Section title="Provant Chips">
+            <View style={{flexDirection: 'row'}}>
+              <Chip icon="web" mode="flat">Internet</Chip>
+              <Chip icon="wifi" mode="outlined" selected={isWifi} selectedColor={isWifi?'red':'black'} onPress={()=>setIsWifi(!isWifi)}>Wifi</Chip>
+            </View>
+          </Section>
         </View>
       </ScrollView>
     </View>
@@ -115,6 +130,12 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  surface: {
+    padding: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
   },
 });
 
