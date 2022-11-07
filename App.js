@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 
-import {TextInput, Button, Switch, Surface, Chip} from 'react-native-paper';
+import {Provider as PaperProvider, TextInput, Button, Switch, Surface, Chip} from 'react-native-paper';
 
 import {
   Colors,
@@ -57,7 +57,7 @@ const App = () => {
   };
 
   return (
-    <View>
+    <PaperProvider>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -110,7 +110,7 @@ const App = () => {
           </Section>
         </View>
       </ScrollView>
-    </View>
+    </PaperProvider>
   );
 };
 
